@@ -1,0 +1,97 @@
+<div class="tab-pane"
+     id="amendments">
+    <div class="tabhead">
+        <h3>Amendments
+            <div class="btng">
+
+                <div class="searchexp <%= if @search_bar == "amendments" do "active" else "" end %>">
+                    <%= f = form_for :foo, "#", [phx_submit: :search, phx_change: :search, id: "search_amendments-form"] %>
+                    <a href="#" phx-click="search_bar" phx-value-search_bar="amendments"
+                       class="btn sbtn"><i class="fas fas fa-search fa-sm"></i></a>
+                    <%= text_input f, :search, name: "soil_amendment", value: @amendment_search, class: "form-control #{@search_bar == "amendments" && "" || "search_bar"}", autofocus: @search_bar == "amendments" && true || false %>
+                    </form>
+                </div>
+
+                <a href="#" class="btn sbtn"><i class="fas fa-filter"></i></a>
+                <a href="#" class="btn ybtn" phx-click="add_amendment"
+                   phx-value-modal="add_amendment"><i class="fas fa-plus"></i> Add Amendment</a>
+
+            </div>
+
+
+        </h3>
+
+    </div>
+    <div class="tabtable">
+        <div class="editbox">
+
+
+            <div class="dropdown">
+                <button type="button" class="btn" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" style="margin: 0px;">
+                    <%= if AppWeb.ProjectLive.ProjectHelpers.check_permission(@permissions, "Projects", "delete") do %>
+                    <a class="dropdown-item" href="#" phx-click="remove_amendment"
+                       phx-value-modal="deletepopup"><i class="far fa-trash-alt"></i> Delete</a>
+                    <% end %>
+                    <a class="dropdown-item" phx-click="download" phx-value-modal="download"
+                       phx-value-entity="amendments" phx-value-key="amendment" href="#"><i
+                            class="fas fa-fw fa-file-alt"></i> Download CSV</a>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-borderless mt-3">
+                <thead>
+                <tr>
+
+                    <th style="width: 20px !important;">
+                        <div class="custom-control custom-checkbox"
+                             style="width: auto !important;">
+                            <input type="checkbox" phx-click="select_amendment"
+                                   phx-value-select="All" class="custom-control-input"
+                                   id="amendments_check"
+                                   name="amendments_check" <%= if  length(@amendments) == length(@selected_ids) do %>
+                                   checked <% end %>>
+                            <label class="custom-control-label" for="amendments_check"></label>
+                        </div>
+                    </th>
+                    <th>name</th>
+                    <th>description</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <%= for am <- @amendments do %>
+                <tr style="cursor: pointer">
+                    <td style="width: 20px !important;">
+                        <div class="custom-control custom-checkbox"
+                             style="width: auto !important;">
+                            <input type="checkbox" phx-click="select_amendment"
+                                   phx-value-select="<%= am.id %>" class="custom-control-input"
+                                   id="custom<%= am.id %>"
+                                   name="<%= am.id %>" <%= if "#{am.id}" in @selected_ids do %>
+                                   checked <% end %>>
+                            <label class="custom-control-label"
+                                   for="custom<%= am.id %>"></label>
+                        </div>
+                    </td>
+                    <td phx-click="edit_amendment" phx-value-id="<%= am.id %>"
+                        phx-value-modal="add_amendment"><%= am.name %> </td>
+                    <td phx-click="edit_amendment" phx-value-id="<%= am.id %>"
+                        phx-value-modal="add_amendment"><%= am.description %> </td>
+
+                </tr>
+                <% end %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
