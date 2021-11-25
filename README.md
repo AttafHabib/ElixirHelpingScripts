@@ -9,5 +9,7 @@ In the cloned repo, run IEx shell
 Run
     ```
     c ["Helpers.ex"]
+    ```
+    ```
     Helpers.getAssigns("TextFileName.txt")
     ```
