@@ -1,6 +1,6 @@
 defmodule Helpers do
 
-	def get_Assings(file_name) do
+	def get_assings(file_name) do
 		cap1 = ~r/([\w]*(?<assign>@[\w]+))/
 		cap2 = ~r/([\w]*(?<assign>assigns\[:\w+\]))/
 
@@ -29,5 +29,33 @@ defmodule Helpers do
 
 		acc ++ [capture]
 
+	end
+
+	defp capture_comments(line, acc) do
+		line_no = if(length(acc) == 0)do
+			1
+		else
+			[head | _] = acc
+			head
+		end
+
+		if(Regex.match? ~r/<%#/, line) do
+			{[line_no], [line_no + 1 | acc]}
+		else
+			{[], [line_no + 1 | acc]}
+		end
+	end
+
+	def get_comment_lines(file_name) do
+		case File.read(file_name) do
+			{:ok, content} -> IO.inspect "********  Written by Attaf Habib  ********"
+												{content, _} = content
+																			 |> String.split("\n")
+																			 |> Enum.flat_map_reduce([], &capture_comments(&1, &2))
+												IO.inspect "Following line numbers have <%# comment in them"
+												IO.inspect content, limit: :infinity
+			{:error, reason} -> IO.puts "Error in opening File #{reason}"
+			_ -> IO.puts "Error in opening File, Invalid match."
+		end
 	end
 end
