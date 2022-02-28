@@ -14,7 +14,7 @@ Run
     ```
     <br />
     ```
-    Helpers.getAssigns("TextFileName.txt")
-    Helpers.get_comment_lines("TextFileName.txt")
+    Helpers.getAssigns(path_to_file)
+    Helpers.get_comment_lines(path_to_file)
     
     ```

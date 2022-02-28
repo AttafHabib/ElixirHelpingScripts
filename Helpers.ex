@@ -1,10 +1,10 @@
 defmodule Helpers do
 
-	def get_assings(file_name) do
+	def get_assings(path_to_file) do
 		cap1 = ~r/([\w]*(?<assign>@[\w]+))/
 		cap2 = ~r/([\w]*(?<assign>assigns\[:\w+\]))/
 
-		case File.read(file_name) do
+		case File.read(path_to_file) do
 		{:ok, content} ->  	IO.inspect "********  Written by Attaf Habib  ********"
 							content = content
 							|> String.split("\n", trim: true)
@@ -46,8 +46,8 @@ defmodule Helpers do
 		end
 	end
 
-	def get_comment_lines(file_name) do
-		case File.read(file_name) do
+	def get_comment_lines(path_to_file) do
+		case File.read(path_to_file) do
 			{:ok, content} -> IO.inspect "********  Written by Attaf Habib  ********"
 												{content, _} = content
 																			 |> String.split("\n")
