@@ -5,7 +5,7 @@ defmodule Helpers do
 		cap2 = ~r/([\w]*(?<assign>assigns\[:\w+\]))/
 
 		case File.read(path_to_file) do
-		{:ok, content} ->  	IO.inspect "********  Written by Attaf Habib  ********"
+		{:ok, content} ->  	
 							content = content
 							|> String.split("\n", trim: true)
 							|>Enum.reduce([], &capture_assigns(&1,&2))
