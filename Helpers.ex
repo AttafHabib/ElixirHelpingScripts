@@ -48,7 +48,7 @@ defmodule Helpers do
 
 	def get_comment_lines(path_to_file) do
 		case File.read(path_to_file) do
-			{:ok, content} -> IO.inspect "********  Written by Attaf Habib  ********"
+			{:ok, content} -> 
 												{content, _} = content
 																			 |> String.split("\n")
 																			 |> Enum.flat_map_reduce([], &capture_comments(&1, &2))
